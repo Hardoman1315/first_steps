@@ -1,13 +1,14 @@
 import abc
 
+
 class ForgeItem(abc.ABC):
-    def __init__ (self, time: int, amount: int):
-        self.time = time
-        self.amount = amount
+    def __init__ (self, forgingTime: float, amount: int):
+        self.forgingTime : float = forgingTime
+        self.amount : int = amount
         ForgeItem.totalForged = amount
 
-    def totalTime(self) -> int:
-        return f'Forging will take {self.time * self.amount} hours of time'
+    def totalTime(self) -> str:
+        return f'Forging will take {self.forgingTime * self.amount} hours of forgingTime'
 
     @abc.abstractmethod
     def resources(self):
@@ -17,22 +18,24 @@ class ForgeItem(abc.ABC):
     def totalForgedCount():
         return ForgeItem.totalForged
 
+
 class Materials(ForgeItem):
-    def __init__ (self, time: int, amount: int, cost: int, material: int):
-        super().__init__(time, amount)
-        self.cost = cost
-        self.material = material
-        self.totalMaterials = self.material * self.amount
-        self.totalCurrencies = self.cost * self.amount
+    def __init__(self, forgingTime: float, amount: int, cost: float, material: float):
+        super().__init__(forgingTime, amount)
+        self.cost : float = cost
+        self.material : float= material
+        self.totalMaterials : float = self.material * self.amount
+        self.totalCurrencies : float = self.cost * self.amount
 
     def resources(self):
         return f'Required {self.totalMaterials} material and {self.totalCurrencies} currencies'
 
+
 class AvailableMaterials(Materials):
-    def __init__ (self, time: int, amount: int, cost: int, material: int, availableCurrencies: int, availableMaterial: int):
-        super().__init__(time, amount, cost, material)
-        self.__availableCurrencies = availableCurrencies
-        self._availableMaterial = availableMaterial
+    def __init__(self, forgingTime: float, amount: int, cost: float, material: float, availableCurrencies: float, availableMaterial: float):
+        super().__init__(forgingTime, amount, cost, material)
+        self.__availableCurrencies : float = availableCurrencies
+        self._availableMaterial : float = availableMaterial
 
     def PossibilityOfForge(self) -> str:
         if self.__availableCurrencies < self.totalCurrencies or self._availableMaterial < self.totalMaterials:
@@ -40,14 +43,15 @@ class AvailableMaterials(Materials):
         else:
             return 'Sufficient resources to forge new item'
 
-time = int(input("Enter forging time: "))
-amount = int(input("Enter amount of forging: "))
-cost = int(input("Enter cost of single forging: "))
-material = int(input("Enter required amount of material to forge: "))
-availableCurrencies = int(input("Enter available amount of currencies: "))
-availableMaterial = int(input("Enter available amount of material: "))
 
-available = AvailableMaterials(time, amount, cost, material, availableCurrencies, availableMaterial)
+forgingTime = float(input("Enter forging forgingTime: "))
+amount = int(input("Enter amount of forging: "))
+cost = float(input("Enter cost of single forging: "))
+material = float(input("Enter required amount of material to forge: "))
+availableCurrencies = float(input("Enter available amount of currencies: "))
+availableMaterial = float(input("Enter available amount of material: "))
+
+available = AvailableMaterials(forgingTime, amount, cost, material, availableCurrencies, availableMaterial)
 
 print(available.totalTime())
 print(available.resources())
