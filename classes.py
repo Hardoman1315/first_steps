@@ -3,66 +3,67 @@ import random
 
 
 class ForgeItem(abc.ABC):
-    def __init__(self, forgingTime: float, amount: int):
-        self.forgingTime : float = forgingTime
+    total_forged : int = 0
+    def __init__(self, forging_time: float, amount: int):
+        self.forging_time : float = forging_time
         self.amount : int = amount
-        ForgeItem.totalForged : int = 0
 
-    def totalTime(self) -> str:
-        return f'Forging will take {self.forgingTime * self.amount} hours of forgingTime'
+    def total_time(self) -> str:
+        return f'Forging will take {self.forging_time * self.amount} hours of forging_time'
 
     @abc.abstractmethod
     def resources(self):
         pass
 
     @staticmethod
-    def totalForgedCount(self) -> float:
-        for _ in range(amount: int):
-            ForgeItem.totalForged += 1
+    def total_forged_count() -> int:
+        for _ in range(amount):
+            ForgeItem.total_forged += 1
+            return forge_item.total_forged
 
 
 class Materials(ForgeItem):
-    def __init__(self, forgingTime: float, amount: int, cost: float, material: float):
-        super().__init__(forgingTime, amount)
+    def __init__(self, forging_time: float, amount: int, cost: float, material: float):
+        super().__init__(forging_time, amount)
         self.cost : float = cost
         self.material : float= material
-        self.totalMaterials : float = self.material * self.amount
-        self.totalCurrencies : float = self.cost * self.amount
+        self.total_materials : float = self.material * self.amount
+        self.total_currencies : float = self.cost * self.amount
 
     def discount(self) -> str:
         if self.amount >= 5:
-            self.totalMaterials = self.totalMaterials * 0.9
-            return f'Discount for forging multiple items is 10% and total amount of required materials - {self.totalMaterials}'
+            self.total_materials = self.total_materials * 0.9
+            return f'Discount for forging multiple items is 10% and total amount of required materials - {self.total_materials}'
         else:
             return 'Not enough items in forge to get discount'
 
     def resources(self):
-        return f'Required {self.totalMaterials} material and {self.totalCurrencies} currencies'
+        return f'Required {self.total_materials} material and {self.total_currencies} currencies'
 
 
 class AvailableMaterials(Materials):
-    def __init__(self, forgingTime: float, amount: int, cost: float, material: float, availableCurrencies: float, availableMaterial: float):
-        super().__init__(forgingTime, amount, cost, material)
-        self.__availableCurrencies : float = availableCurrencies
-        self._availableMaterial : float = availableMaterial
+    def __init__(self, forging_time: float, amount: int, cost: float, material: float, available_currencies: float, available_materials: float):
+        super().__init__(forging_time, amount, cost, material)
+        self.__available_currencies : float = available_currencies
+        self._available_materials : float = available_materials
 
-    def getAvailableMaterial(self) -> float:
-        return self._availableMaterial
+    def get_available_material(self) -> float:
+        return self._available_materials
 
-    def setAvailableMaterial(self) -> str:
-        self._availableMaterial = AvailableMaterial
-        return f'AvailableMaterial now equal {self._availableMaterial}'
+    def set_available_material(self) -> str:
+        self._available_materials = available_materials
+        return f'AvailableMaterial now equal {self._available_materials}'
 
     @property
-    def getAvailableCurrencies(self) -> float:
-        return self.__availableCurrencies
+    def get_available_currencies(self) -> float:
+        return self.__available_currencies
 
-    @getAvailableCurrencies.setter
-    def getAvailableCurrencies(self, availableCurrencies: float):
-        self.__availableCurrencies = availableCurrencies
+    @get_available_currencies.setter
+    def get_available_currencies(self, available_currencies: float):
+        self.__available_currencies = available_currencies
 
-    def possibilityOfForge(self) -> str:
-        if self.__availableCurrencies < self.totalCurrencies or self._availableMaterial < self.totalMaterials:
+    def possibility_of_forge(self) -> str:
+        if self.__available_currencies < self.total_currencies or self._available_materials < self.total_materials:
             return 'Not enough resources to forge new item'
         else:
             return 'Sufficient resources to forge new item'
@@ -71,26 +72,26 @@ class AvailableMaterials(Materials):
 # Uncomment to manual input
 
 """
-forgingTime = float(input("Enter forging forgingTime: "))
+forging_time = float(input("Enter forging forging_time: "))
 amount = int(input("Enter amount of forging: "))
 cost = float(input("Enter cost of single forging: "))
 material = float(input("Enter required amount of material to forge: "))
-availableCurrencies = float(input("Enter available amount of currencies: "))
-availableMaterial = float(input("Enter available amount of material: "))
+available_currencies = float(input("Enter available amount of currencies: "))
+available_materials = float(input("Enter available amount of material: "))
 """
 
-# Comment to random input
+# Uncomment to random input
 
-forgingTime = random.uniform(1, 10)
+forging_time = random.uniform(1, 10)
 amount = random.randint(1, 10)
 cost = random.uniform(1, 10)
 material = random.uniform(1, 10)
-availableCurrencies = random.uniform(1, 100)
-availableMaterial = random.uniform(1, 100)
+available_currencies = random.uniform(1, 100)
+available_materials = random.uniform(1, 100)
 
-available = AvailableMaterials(forgingTime, amount, cost, material, availableCurrencies, availableMaterial)
+available = AvailableMaterials(forging_time, amount, cost, material, available_currencies, available_materials)
 
-print(available.totalTime())
+print(available.total_time())
 print(available.resources())
 print(available.discount())
-print(available.possibilityOfForge())
+print(available.possibility_of_forge())
