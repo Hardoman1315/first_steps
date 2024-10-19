@@ -6,10 +6,10 @@ def check_prime(num: int) -> bool:
     else:
         is_prime = True
         for i in range(3, int(num ** 0.5) + 1, 2):
-                 if num % i == 0:
-                     is_prime = False
-                     break
-                 is_prime = True
+            if num % i == 0:
+                is_prime = False
+                break
+            is_prime = True
     return is_prime
 
 
