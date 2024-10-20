@@ -5,8 +5,8 @@ import random
 class ForgeItem(abc.ABC):
     total_forged : int = 0
     def __init__(self, forging_time: float, amount: int):
-        self.forging_time : float = forging_time
-        self.amount : int = amount
+        self.forging_time: float = forging_time
+        self.amount: int = amount
 
     def total_time(self) -> str:
         return f'Forging will take {self.forging_time * self.amount} hours of forging_time'
@@ -25,10 +25,10 @@ class ForgeItem(abc.ABC):
 class Materials(ForgeItem):
     def __init__(self, forging_time: float, amount: int, cost: float, material: float):
         super().__init__(forging_time, amount)
-        self.cost : float = cost
-        self.material : float = material
-        self.total_materials : float = self.material * self.amount
-        self.total_currencies : float = self.cost * self.amount
+        self.cost: float = cost
+        self.material: float = material
+        self.total_materials: float = self.material * self.amount
+        self.total_currencies: float = self.cost * self.amount
 
     def discount(self) -> str:
         if self.amount >= 5:
